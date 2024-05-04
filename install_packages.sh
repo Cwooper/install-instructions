@@ -2,19 +2,7 @@
 # Cooper Morgan
 # Run this program with sudo
 # This will `sudo apt install` all packages in packages.txt
-# 
-# This program assumes that you have already added:
-# deb http://deb.debian.org/debian/ bookworm main contrib non-free non-free-firmware
-# to your /etc/apt/sources.list
-#
-# Also make sure to run sudo gpasswd -a $USER plugdev
-# for openrazer driver to take effect
-#
-# Finish installing vpn here: 
-# https://support.cs.wwu.edu/home/access/wwu_vpn/linux_bsd/wwu_nm.html
-#
-# Reboot the system after installing packages
-#
+
 
 
 # Color codes
