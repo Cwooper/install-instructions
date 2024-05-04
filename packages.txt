@@ -1,0 +1,56 @@
+# Drivers
+nvidia-driver
+firmware-mist-nonfree
+openrazer-daemon
+
+# Gnome utils
+gnome-shell-extension-dashtodock
+gnome-tweals
+
+# Misc
+git
+code
+curl
+wget
+emacs
+google-chrome-stable
+manpages-dev
+most
+
+# C essentials
+build-essential
+
+# python packages
+python3
+python3-pytest
+python3-pandas
+python3-numpy
+python3-aha
+python3-matplotlib
+python3-openpyxl
+
+# latex packages
+texlive-base
+texlive-latex-base
+texlive-latex-extra
+texlive-latex-recommended
+texlive-fonts-extra
+texlive-fonts-recommended
+chktex
+
+# 347 Formatting
+a2ps
+poppler-utils
+wkhtmltopdf
+ghostscript
+
+# WWU VPN
+openvpn
+network-manager
+network-manager-gnome
+network-manager-openvpn
+network-manager-openvpn-gnome
+
+# Remote Desktop
+remmina
+remmina-plugin-rdp
