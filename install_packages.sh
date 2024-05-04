@@ -30,6 +30,9 @@ fi
 # Update the OS first
 apt update -y
 
+# Initialize an array to store failed packages
+failed_packages=()
+
 # Read packages from packages.txt and reinstall them
 while IFS= read -r line
 do
@@ -38,7 +41,8 @@ do
         continue
     fi
     
-    package=$(echo "$line" | awk '{print $1}') # Extract the package name (in case there are extra parameters)
+    # Extract the package name if multiple variables in the line
+    package=$(echo "$line" | awk '{print $1}')
     
     # Install package silently and check exit status
     apt -qq install -y "$package"
@@ -46,9 +50,18 @@ do
         echo -e "${GREEN}$package installed successfully.${NC}"
     else
         echo -e "${RED}$package installation failed.${NC}"
+        failed_packages+=("$package")
     fi
 done < "packages.txt"
 
 apt -qq autoremove -y
 
 echo "All packages installed or attempted to install."
+
+# Output failed packages to a text file
+if [ ${#failed_packages[@]} -ne 0 ]; then
+    echo "${RED}The following packages failed to install:${NC}" > failed_packages.txt
+    for failed_package in "${failed_packages[@]}"; do
+        echo "$failed_package" >> failed_packages.txt
+    done
+fi
