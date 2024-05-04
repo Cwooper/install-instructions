@@ -7,15 +7,19 @@ openrazer-daemon
 gnome-shell-extension-dashtodock
 gnome-tweals
 
-# Misc
+# Utils
 git
-code
 curl
 wget
-emacs
-google-chrome-stable
 manpages-dev
 most
+
+# Misc
+code
+emacs
+google-chrome-stable
+discord
+spotify-client
 
 # C essentials
 build-essential
