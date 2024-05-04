@@ -3,8 +3,6 @@
 # Run this program with sudo
 # This will `sudo apt install` all packages in packages.txt
 
-
-
 # Color codes
 GREEN='\033[0;32m'
 RED='\033[0;31m'

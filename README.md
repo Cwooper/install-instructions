@@ -1,4 +1,5 @@
 # Current Install Instructions
+
 Cooper Morgan
 05/03/2024
 
@@ -11,7 +12,7 @@ to your `/etc/apt/sources.list`.
 - Also make sure to run `sudo gpasswd -a $USER plugdev`
 for openrazer driver to take effect
 
-- Finish installing WWU VPN here: 
+- Finish installing WWU VPN here:
 `https://support.cs.wwu.edu/home/access/wwu_vpn/linux_bsd/wwu_nm.html`
 
 - Remember to add
@@ -20,9 +21,17 @@ to `~/.bashrc`
 
 - Reboot the system after installing packages
 
+## Manual App Installs
+
+- vscode
+- discord
+- spotify
+- chrome
+- godot
+
 ## Current directory tree
 
-```
+```tree
 home/cwooper
 ├── 305
 ├── 347
@@ -36,12 +45,12 @@ home/cwooper
 ```
 
 ## Current Directories
+
 git clone
 
+<https://github.com/Cwooper/305>
 
-https://github.com/Cwooper/305
-
-https://gitlab.cs.wwu.edu/gibbonj9/csci347_s24
+<https://gitlab.cs.wwu.edu/gibbonj9/csci347_s24>
 
 `mkdir vault`
 
@@ -49,9 +58,39 @@ https://gitlab.cs.wwu.edu/gibbonj9/csci347_s24
 
 git clone
 
-https://github.com/Cwooper/install-instructions
+<https://github.com/Cwooper/install-instructions>
 
-https://github.com/Cwooper/schedule-optimizer
+<https://github.com/Cwooper/schedule-optimizer>
 
-https://github.com/cs-wwu/srg-synvis
-v
+<https://github.com/cs-wwu/srg-synvis>
+
+## First Time Boot Debian
+
+Select recovery mode. Press `e`for edit settings, Add `nomodeset` on `linux` line.
+
+- `systemctl start NetworkManager`
+- add `main contrib non-free` to `sources.list`
+- `apt update`
+- `apt -y install nvidia-driver`
+- `apt -y install openrazer_daemon`
+- `gpasswd -a cwooper plugdev`
+- `reboot -f`
+
+Setup
+
+- `su`, `sudo visudo`
+- add `cwooper` to sudo group
+- `sudo apt install git`
+- Manually install apps
+- Run `./install_packages.sh` for package installations.
+- `sudo reboot -f`
+
+Customization
+
+- Set all to dark mode
+- `nano ~/.bashrc`
+- add `export PAGER=most` and save
+- open `tweaks` to turn off mouse acceleration
+- enable `Dash to Dock` extension and customize
+- Sign-in to every thing
+- Install WWU VPN
