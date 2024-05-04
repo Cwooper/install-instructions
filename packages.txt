@@ -10,6 +10,7 @@ manpages-dev
 most
 
 # Misc
+tree
 emacs
 discord
 spotify-client

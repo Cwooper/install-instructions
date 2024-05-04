@@ -9,11 +9,10 @@ Cooper Morgan
 `deb http://deb.debian.org/debian/ bookworm main contrib non-free non-free-firmware`
 to your `/etc/apt/sources.list`.
 
-- Also make sure to run `sudo gpasswd -a $USER plugdev`
-for openrazer driver to take effect
+- Finish installing [WWU VPN](https://support.cs.wwu.edu/home/access/wwu_vpn/linux_bsd/wwu_nm.html).
+Install the config file here: <https://support.cs.wwu.edu/_downloads/7ad3a095a821c8ce0ce5e847bc57b48a/CSCI-VPN.ovpn>
 
-- Finish installing WWU VPN here:
-`https://support.cs.wwu.edu/home/access/wwu_vpn/linux_bsd/wwu_nm.html`
+- Add SSH key from WWU
 
 - Remember to add
 `export PAGER=most`
