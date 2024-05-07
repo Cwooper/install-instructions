@@ -37,6 +37,7 @@ texlive-latex-recommended
 texlive-fonts-extra
 texlive-fonts-recommended
 chktex
+latexmk
 
 # 347 Formatting
 aha
