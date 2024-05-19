@@ -8,12 +8,15 @@ curl
 wget
 manpages-dev
 most
+finger
 
 # Misc
 tree
 emacs
 discord
 spotify-client
+sl
+neofetch
 
 # C essentials
 build-essential
