@@ -16,7 +16,8 @@ emacs
 discord
 spotify-client
 sl
-neofetch
+manpages-posix
+manpages-posix-dev
 
 # C essentials
 build-essential
