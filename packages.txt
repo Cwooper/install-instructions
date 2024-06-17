@@ -12,7 +12,7 @@ finger
 
 # Misc
 tree
-emacs
+vim
 discord
 spotify-client
 sl
