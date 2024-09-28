@@ -16,8 +16,6 @@ vim
 discord
 spotify-client
 sl
-manpages-posix
-manpages-posix-dev
 
 # C essentials
 build-essential

@@ -57,11 +57,12 @@ done < "packages.txt"
 apt -qq autoremove -y
 
 echo "All packages installed or attempted to install."
+echo
 
 # Output failed packages to a text file
 if [ ${#failed_packages[@]} -ne 0 ]; then
-    echo "${RED}The following packages failed to install:${NC}" > failed_packages.txt
+    echo -e "${RED}The following packages failed to install:${NC}"
     for failed_package in "${failed_packages[@]}"; do
-        echo "$failed_package" >> failed_packages.txt
+        echo "$failed_package"
     done
 fi
