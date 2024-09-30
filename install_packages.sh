@@ -1,7 +1,7 @@
 #!/bin/bash
 # Cooper Morgan
 # Run this program with sudo
-# This will `sudo apt install` all packages in packages.txt
+# This will `sudo apt install` all packages in packages.ini
 
 # Color codes
 GREEN='\033[0;32m'
@@ -15,8 +15,8 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # Check if packages.txt exists
-if [ ! -f "packages.txt" ]; then
-    echo "packages.txt not found!"
+if [ ! -f "packages.ini" ]; then
+    echo "packages.ini not found!"
     exit 1
 fi
 
@@ -33,7 +33,7 @@ apt update -y
 # Initialize an array to store failed packages
 failed_packages=()
 
-# Read packages from packages.txt and reinstall them
+# Read packages from packages.ini and reinstall them
 while IFS= read -r line
 do
     # Skip empty lines and comment lines
@@ -52,7 +52,7 @@ do
         echo -e "${RED}$package installation failed.${NC}"
         failed_packages+=("$package")
     fi
-done < "packages.txt"
+done < "packages.ini"
 
 apt -qq autoremove -y
 
