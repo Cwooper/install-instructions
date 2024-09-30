@@ -17,6 +17,7 @@ vim
 discord
 spotify-client
 sl
+protobuf-compiler
 
 # C essentials
 build-essential
