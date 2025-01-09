@@ -3,32 +3,50 @@
 # Exit on any error
 set -e
 
-# Check if script is run as root
-if [ "$EUID" -ne 0 ]; then
-    echo "Please run this script as root (with sudo)"
-    exit 1
+# Check if fish is already installed
+if ! command -v fish &>/dev/null; then
+    # Fish is not installed, check for root privileges
+    if [ "$EUID" -ne 0 ]; then
+        echo "Fish is not installed. Please run this script as root (with sudo) to install it."
+        exit 1
+    fi
 fi
 
-# Store the original user who ran sudo
+# Store the user
 ORIGINAL_USER=$SUDO_USER
 if [ -z "$ORIGINAL_USER" ]; then
-    echo "Please run this script as sudo"
-    exit 1
+    # If not running with sudo, use the current user
+    ORIGINAL_USER=$USER
 fi
 
-# Install fish shell
-echo "Installing fish shell..."
-apt -y install fish
+# Install fish shell if not already installed
+if ! command -v fish &>/dev/null; then
+    echo "Installing fish shell..."
+    apt -y install fish
 
-# Check if fish is in /etc/shells
-if ! grep -q "^/usr/bin/fish$" /etc/shells; then
-    echo "Adding fish to /etc/shells..."
-    echo "/usr/bin/fish" >>/etc/shells
+    # Check if fish is in /etc/shells
+    if ! grep -q "^/usr/bin/fish$" /etc/shells; then
+        echo "Adding fish to /etc/shells..."
+        echo "/usr/bin/fish" >>/etc/shells
+    fi
+
+    # Change shell for the original user
+    echo "Changing default shell to fish for user $ORIGINAL_USER..."
+    chsh -s /usr/bin/fish "$ORIGINAL_USER"
+else
+    echo "Fish shell is already installed, skipping installation..."
+
+    # Check if fish is already the default shell
+    if ! grep -q "^$ORIGINAL_USER.*fish$" /etc/passwd; then
+        echo "Setting fish as default shell..."
+        if [ "$EUID" -eq 0 ]; then
+            chsh -s /usr/bin/fish "$ORIGINAL_USER"
+        else
+            echo "To set fish as your default shell, run: chsh -s $(which fish)"
+            echo "You may need to log out and back in for the change to take effect."
+        fi
+    fi
 fi
-
-# Change shell for the original user
-echo "Changing default shell to fish for user $ORIGINAL_USER..."
-chsh -s /usr/bin/fish "$ORIGINAL_USER"
 
 # Create fish config directory if it doesn't exist
 FISH_CONFIG_DIR="/home/$ORIGINAL_USER/.config/fish"
@@ -73,13 +91,13 @@ convert_alias() {
     if [[ $line =~ ^alias[[:space:]]+([^=]+)=(.*)$ ]]; then
         local name="${BASH_REMATCH[1]}"
         local command="${BASH_REMATCH[2]}"
-        
+
         # Remove quotes if present
         command="${command#\"}"
         command="${command%\"}"
         command="${command#\'}"
         command="${command%\'}"
-        
+
         # Output in fish syntax
         echo "alias $name '$command'"
     fi
@@ -88,15 +106,15 @@ convert_alias() {
 # Read .bashrc and process exports
 {
     comment=""
-    echo "# Exported variables" >> "$CONFIG_FILE"
-    echo "" >> "$CONFIG_FILE"
-    
+    echo "# Exported variables" >>"$CONFIG_FILE"
+    echo "" >>"$CONFIG_FILE"
+
     while IFS= read -r line || [ -n "$line" ]; do
         # Skip empty lines
         if [[ -z "$line" ]]; then
             continue
         fi
-        
+
         # Collect comments
         if [[ "$line" =~ ^[[:space:]]*# ]]; then
             if [ -n "$comment" ]; then
@@ -106,37 +124,37 @@ convert_alias() {
             fi
             continue
         fi
-        
+
         # Process export lines
         if [[ "$line" =~ ^export[[:space:]] ]]; then
             # Write collected comments if any
             if [ -n "$comment" ]; then
-                echo -e "$comment" >> "$CONFIG_FILE"
+                echo -e "$comment" >>"$CONFIG_FILE"
                 comment=""
             fi
-            
+
             # Convert and write the export
             converted=$(convert_export "$line")
-            echo "$converted" >> "$CONFIG_FILE"
-            echo "" >> "$CONFIG_FILE"
+            echo "$converted" >>"$CONFIG_FILE"
+            echo "" >>"$CONFIG_FILE"
         # Process alias lines
         elif [[ "$line" =~ ^alias[[:space:]] ]]; then
             # Write collected comments if any
             if [ -n "$comment" ]; then
-                echo -e "$comment" >> "$CONFIG_FILE"
+                echo -e "$comment" >>"$CONFIG_FILE"
                 comment=""
             fi
-            
+
             # Convert and write the alias
             converted=$(convert_alias "$line")
-            echo "$converted" >> "$CONFIG_FILE"
-            echo "" >> "$CONFIG_FILE"
+            echo "$converted" >>"$CONFIG_FILE"
+            echo "" >>"$CONFIG_FILE"
         else
             # Reset comment collection for non-matching lines
             comment=""
         fi
     done
-} < "$BASHRC"
+} <"$BASHRC"
 
 # Fix permissions
 chown -R "$ORIGINAL_USER:$ORIGINAL_USER" "$FISH_CONFIG_DIR"
