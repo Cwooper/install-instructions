@@ -1,95 +1,66 @@
-# Current Install Instructions
+# Debian Setup Scripts
 
-Cooper Morgan
-05/03/2024
+A modular approach to automating Debian post-installation setup.
 
-## Notes
+## Structure
 
-- This program assumes that you have already added:
-`deb http://deb.debian.org/debian/ bookworm main contrib non-free non-free-firmware`
-to your `/etc/apt/sources.list`.
-
-- Finish installing [WWU VPN](https://support.cs.wwu.edu/home/access/wwu_vpn/linux_bsd/wwu_nm.html).
-Install the config file here: <https://support.cs.wwu.edu/_downloads/7ad3a095a821c8ce0ce5e847bc57b48a/CSCI-VPN.ovpn>
-
-- Add SSH key from WWU
-
-- Remember to add
-`export PAGER=most`
-to `~/.bashrc`
-
-- Reboot the system after installing packages
-
-## Manual App Installs
-
-- vscode
-- discord
-- spotify
-- chrome
-- godot
-
-## Current directory tree
-
-```tree
-home/cwooper
-├── 305
-├── 347
-└── vault
-    ├── schedule-optimizer
-    ├── srg-synvis
-    └── install-instructions
-        ├── install_packages.sh
-        ├── packages.txt
-        └── tree.md
+```sh
+.
+├── configs
+│   └── packages.ini      # List of packages to install
+├── scripts
+│   ├── install_packages.sh  # Installs packages from packages.ini
+│   ├── setup_fish.sh        # Sets up fish shell
+│   ├── setup_git.sh         # Sets up Git configuration
+│   └── setup_repos.sh       # Adds repositories
+└── setup.sh                 # Main script
 ```
 
-## Current Directories
+## Usage
 
-git clone
+1. First, clone this repository:
 
-<https://github.com/Cwooper/305>
+   ```sh
+   git clone https://github.com/yourusername/debian-setup.git
+   cd debian-setup
+   ```
 
-<https://gitlab.cs.wwu.edu/gibbonj9/csci347_s24>
+2. Make all scripts executable:
 
-`mkdir vault`
+   ```sh
+   chmod +x setup.sh
+   chmod +x scripts/*.sh
+   ```
 
-`cd vault`
+3. Run the setup script as root:
 
-git clone
+   ```sh
+   sudo ./setup.sh
+   ```
 
-<https://github.com/Cwooper/install-instructions>
+### Options
 
-<https://github.com/Cwooper/schedule-optimizer>
+The main script supports several options:
 
-<https://github.com/cs-wwu/srg-synvis>
+- `-h, --help`: Show help message
+- `-v, --verbose`: Enable verbose output
+- `--no-repos`: Skip adding repositories
+- `--no-packages`: Skip installing packages
+- `--no-fish`: Skip setting up fish shell
+- `--no-git`: Skip Git configuration
 
-## First Time Boot Debian
+Example:
 
-Select recovery mode. Press `e`for edit settings, Add `nomodeset` on `linux` line.
+```sh
+sudo ./setup.sh --no-fish
+```
 
-- `systemctl start NetworkManager`
-- add `main contrib non-free` to `sources.list`
-- `apt update`
-- `apt -y install nvidia-driver`
-- `apt -y install openrazer_daemon`
-- `gpasswd -a cwooper plugdev`
-- `reboot -f`
+## Customization
 
-Setup
+- Edit `configs/packages.ini` to modify the list of packages to install
+- Modify individual scripts in the `scripts/` directory to customize their behavior
 
-- `su`, `sudo visudo`
-- add `cwooper` to sudo group
-- `sudo apt install git`
-- Manually install apps
-- Run `./install_packages.sh` for package installations.
-- `sudo reboot -f`
+## Requirements
 
-Customization
-
-- Set all to dark mode
-- `nano ~/.bashrc`
-- add `export PAGER=most` and save
-- open `tweaks` to turn off mouse acceleration
-- enable `Dash to Dock` extension and customize
-- Sign-in to every thing
-- Install WWU VPN
+- Debian 13 (Trixie) or newer
+- Root privileges for installation
