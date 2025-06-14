@@ -1,4 +1,4 @@
-#!/bin/bash
+!/bin/bash
 # Script to add repositories
 
 set -e
@@ -26,7 +26,7 @@ echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" 
 
 # Spotify repository
 echo "Adding Spotify repository..."
-curl -sS https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg | gpg --dearmor > /etc/apt/trusted.gpg.d/spotify.gpg
+curl -sS https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
 echo "deb http://repository.spotify.com stable non-free" > /etc/apt/sources.list.d/spotify.list
 
 # Discord (download .deb file)
