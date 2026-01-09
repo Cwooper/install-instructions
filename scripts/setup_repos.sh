@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 # Script to add repositories
 
 set -e
